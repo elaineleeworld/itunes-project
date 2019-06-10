@@ -1,14 +1,18 @@
 <template>
   <div>
-    <h1>Hello from results route {{$route.params.id}}</h1>
+    <h1>Results for {{$route.params.id}}</h1>
+    <Card/>
     <!-- {{$store.state.albums}} -->
-    <h2>Output</h2>
-    {{albumData}}
+    <div v-if="albumExists">{{albumData}}</div>
+    <div v-else>
+      <h1>Could not find any albums</h1>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Card from "~/components/Card.vue";
 export default {
   asyncData({ params }) {
     return axios
@@ -17,7 +21,15 @@ export default {
         return { albumData: response.data.results };
       });
   },
-  middleware: "search"
+  components: {
+    Card
+  },
+  middleware: "search",
+  computed: {
+    albumExists() {
+      return this.albumData.length > 0;
+    }
+  }
 };
 </script>
 
