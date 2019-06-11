@@ -1,9 +1,20 @@
 <template>
   <div>
     <h1>Results for {{$route.params.id}}</h1>
-    <Card/>
+
     <!-- {{$store.state.albums}} -->
-    <div v-if="albumExists">{{albumData}}</div>
+    <div v-if="albumExists">
+      <div v-for="(album, index) in albumData">
+        <Card
+          :title="album.collectionCensoredName"
+          :image="album.artworkUrl100"
+          :artistName="album.artistName"
+          :url="album.artistViewUrl"
+          :color="picker(index)"
+        />
+      </div>
+      {{albumData}}
+    </div>
     <div v-else>
       <h1>Could not find any albums</h1>
     </div>
@@ -25,6 +36,11 @@ export default {
     Card
   },
   middleware: "search",
+  methods: {
+    picker(index) {
+      return index % 2 == 0 ? "red" : "blue";
+    }
+  },
   computed: {
     albumExists() {
       return this.albumData.length > 0;

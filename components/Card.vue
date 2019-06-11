@@ -3,16 +3,20 @@
     <v-container fluid style="min-height: 0;" grid-list-lg>
       <v-layout row wrap>
         <v-flex xs12>
-          <v-card color="blue-grey darken-2" class="white--text">
-            <v-card-title primary-title>
-              <div>
-                <div class="headline">Unlimited music now</div>
-                <span>Listen to your favorite artists and albums whenever and wherever, online and offline.</span>
-              </div>
-            </v-card-title>
-            <v-card-actions>
-              <v-btn flat dark>Listen now</v-btn>
-            </v-card-actions>
+          <v-card target="_blank" :href="url" :color="color" class="white--text">
+            <v-container fluid grid-list-lg>
+              <v-layout row>
+                <v-flex xs7>
+                  <div>
+                    <div class="headline">{{title}}</div>
+                    <div>{{artistName}}</div>
+                  </div>
+                </v-flex>
+                <v-flex xs5>
+                  <v-card-media :src="image" height="100px" contain></v-card-media>
+                </v-flex>
+              </v-layout>
+            </v-container>
           </v-card>
         </v-flex>
       </v-layout>
@@ -21,6 +25,6 @@
 </template>
 <<script>
 export default {
-    
+    props: ['title', 'image', 'artistName', 'url', 'color']
 }
 </script>
